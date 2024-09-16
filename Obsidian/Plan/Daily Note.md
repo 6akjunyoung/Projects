@@ -9,16 +9,16 @@ due today
 not done
 due after today
 due before two weeks later
+sort by due date
+sort by priority 
 ```
 
-### 오늘 완료 Task
+### 완료 Task
 ```tasks
-done on today
+done before tomorrow
+sort by due date reverse
+sort by priority 
 ```
-
-
-
-
 
 
 

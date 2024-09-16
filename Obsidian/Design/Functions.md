@@ -1,0 +1,3 @@
+ - [ ] Volume up/down
+ - [ ] Screen brightness up/down
+ - [ ] Youtube application execution
