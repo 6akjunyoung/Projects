@@ -1,3 +1,3 @@
- - [ ] Volume up/down
+ - [x] Volume up/down ✅ 2024-09-16
  - [ ] Screen brightness up/down
  - [ ] Youtube application execution
