@@ -17,17 +17,23 @@ class Deck:
     def getTkInstance(self):
         return self.__instance
 
-    def addSection(self, title):
-        section = tk.LabelFrame(self.__instance, text=title, padx=10, pady=10)
+    def addSection(self, name):
+        section = tk.LabelFrame(self.__instance, text=name, padx=10, pady=10)
         section.pack(padx=10, pady=10, fill="x")
-        self.__section[title] = section
+        self.__section[name] = section
         return section
 
-    def addButton(self, text, func, sectiontitle):
-        button = tk.Button(self.__section[sectiontitle], text=text, command=func)
+    def addButton(self, text, func, sectionname):
+        button = tk.Button(self.__section[sectionname], text=text, command=func)
         button.pack(side="left", padx=5, pady=5)
 
-    def addLabel(self, text, sectiontitle):
-        label = tk.Label(self.__section[sectiontitle], text=text)
+    def addLabel(self, text, sectionname):
+        label = tk.Label(self.__section[sectionname], text=text)
         label.pack(side="left", padx=10)
         return label
+
+    def addScale(self, func, val, sectionname):
+        slider = tk.Scale(self.__section[sectionname], from_=0, to=100, orient="horizontal", command=func)
+        slider.set(val)
+        slider.pack(side="left", padx=10)
+        return slider
