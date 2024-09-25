@@ -26,28 +26,23 @@ streamdeck.addButton("Safari 실행", lambda: launch_app("Safari"), "Application
 streamdeck.addButton("계산기 실행", lambda: launch_app("Calculator"), "Application")
 
 # 볼륨 조절 섹션
-volume_frame = streamdeck.addSection(volumeController.getTitle())
+streamdeck.addSection(volumeController.getTitle())
 streamdeck.addButton("- 볼륨 낮추기", volumeController.decreaseLevel, volumeController.getTitle())
-volume_label = streamdeck.addLabel("볼륨: --%", volumeController.getTitle())
+streamdeck.addLabel("볼륨: %s%%", volumeController.getLevel, volumeController.getTitle())
 streamdeck.addButton("+ 볼륨 올리기", volumeController.increaseLevel, volumeController.getTitle())
-volume_slider = streamdeck.addScale(lambda val: volumeController.setLevel(int(val)), volumeController.getLevel(), volumeController.getTitle())
+streamdeck.addScale(lambda val: volumeController.setLevel(int(val)), volumeController.getLevel(), volumeController.getTitle())
 
 # 밝기 조절 섹션
-brightness_frame = streamdeck.addSection(brightnessController.getTitle())
+streamdeck.addSection(brightnessController.getTitle())
 streamdeck.addButton("- 밝기 낮추기", brightnessController.decreaseLevel, brightnessController.getTitle())
-brightness_label = streamdeck.addLabel("밝기: --%", brightnessController.getTitle())
+streamdeck.addLabel("밝기: %s%%", brightnessController.getLevel, brightnessController.getTitle())
 streamdeck.addButton("+ 밝기 올리기", brightnessController.increaseLevel, brightnessController.getTitle())
-brightness_slider = streamdeck.addScale(lambda val: brightnessController.setLevel(int(val)), int(brightnessController.getLevel()), brightnessController.getTitle())
+streamdeck.addScale(lambda val: brightnessController.setLevel(int(val)), int(brightnessController.getLevel()), brightnessController.getTitle())
 
 # 상태 업데이트 함수 수정
 def update_labels():
-    current_volume = volumeController.getLevel()
-    volume_slider.set(current_volume)
-    volume_label.config(text=f"볼륨: {current_volume}%")
-    
-    current_brightness = brightnessController.getLevel()
-    brightness_slider.set(int(current_brightness))
-    brightness_label.config(text=f"밝기: {int(current_brightness)}%")
+    streamdeck.updateLabel(volumeController.getTitle())
+    streamdeck.updateLabel(brightnessController.getTitle())
 
 # 상태 업데이트 섹션
 status_frame = tk.Frame(root, padx=10, pady=10)

@@ -7,6 +7,8 @@ class Deck:
         self.__width = width
         self.__height = height
         self.__section = {}
+        self.__labelupdater = {}
+        self.__slider = {}
         self.__initInstance()
 
     def __initInstance(self):
@@ -21,19 +23,24 @@ class Deck:
         section = tk.LabelFrame(self.__instance, text=name, padx=10, pady=10)
         section.pack(padx=10, pady=10, fill="x")
         self.__section[name] = section
-        return section
 
     def addButton(self, text, func, sectionname):
         button = tk.Button(self.__section[sectionname], text=text, command=func)
         button.pack(side="left", padx=5, pady=5)
 
-    def addLabel(self, text, sectionname):
+    def addLabel(self, text, func, sectionname):
         label = tk.Label(self.__section[sectionname], text=text)
+        self.__labelupdater[sectionname] = label, text, func
         label.pack(side="left", padx=10)
-        return label
 
     def addScale(self, func, val, sectionname):
         slider = tk.Scale(self.__section[sectionname], from_=0, to=100, orient="horizontal", command=func)
         slider.set(val)
         slider.pack(side="left", padx=10)
-        return slider
+        self.__slider[sectionname] = slider
+
+    def updateLabel(self, sectionname):
+        label, text, func = self.__labelupdater[sectionname]
+        value = func()
+        label.config(text=text%str(value))
+        self.__slider[sectionname].set(value)
