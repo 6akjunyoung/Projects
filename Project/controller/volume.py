@@ -8,6 +8,9 @@ class Volume:
         self.__maxLevel = 100
         self.__minLevel = 0
 
+    def getLabel(self):
+        return "볼륨: %s%%" % str(self.getLevel())
+
     def getLevel(self):
         if ('Windows'==platform.system()):
             return 0

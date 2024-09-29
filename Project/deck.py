@@ -6,41 +6,24 @@ class Deck:
         self.__title = title
         self.__width = width
         self.__height = height
-        self.__section = {}
-        self.__labelupdater = {}
-        self.__slider = {}
-        self.__initInstance()
+        self.__sections = []
+        self.__updaters = []
+        self.__initGUI()
 
-    def __initInstance(self):
-        self.__instance = tk.Tk()
-        self.__instance.title(self.__title)
-        self.__instance.geometry(f"{ self.__width }x{ self.__height }")
+    def __initGUI(self):
+        self.__gui = tk.Tk()
+        self.__gui.title(self.__title)
+        self.__gui.geometry(f"{ self.__width }x{ self.__height }")
 
-    def getTkInstance(self):
-        return self.__instance
+    def update(self):
+        for updater in self.__updaters:
+            updater()
 
-    def addSection(self, name):
-        section = tk.LabelFrame(self.__instance, text=name, padx=10, pady=10)
-        section.pack(padx=10, pady=10, fill="x")
-        self.__section[name] = section
+    def getGUI(self):
+        return self.__gui
 
-    def addButton(self, text, func, sectionname):
-        button = tk.Button(self.__section[sectionname], text=text, command=func)
-        button.pack(side="left", padx=5, pady=5)
+    def appendSection(self, section):
+        self.__sections.append(section)
 
-    def addLabel(self, text, func, sectionname):
-        label = tk.Label(self.__section[sectionname], text=text)
-        self.__labelupdater[sectionname] = label, text, func
-        label.pack(side="left", padx=10)
-
-    def addScale(self, func, val, sectionname):
-        slider = tk.Scale(self.__section[sectionname], from_=0, to=100, orient="horizontal", command=func)
-        slider.set(val)
-        slider.pack(side="left", padx=10)
-        self.__slider[sectionname] = slider
-
-    def updateLabel(self, sectionname):
-        label, text, func = self.__labelupdater[sectionname]
-        value = func()
-        label.config(text=text%str(value))
-        self.__slider[sectionname].set(value)
+    def appendUpdater(self, updater):
+        self.__updaters.append(updater)

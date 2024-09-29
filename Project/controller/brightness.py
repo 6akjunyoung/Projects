@@ -6,6 +6,9 @@ class Brightness:
         self.__maxLevel = 100
         self.__minLevel = 0
 
+    def getLabel(self):
+        return "밝기: %s%%" % str(self.getLevel())
+
     def setLevel(self, level):
         level = max(level, self.__minLevel)
         level = min(level, self.__maxLevel)
