@@ -13,6 +13,15 @@ sort by due date
 sort by priority 
 ```
 
+----
+
+### 미완료 Task
+```tasks
+not done
+sort by due date
+sort by priority 
+```
+
 ### 완료 Task
 ```tasks
 done before tomorrow

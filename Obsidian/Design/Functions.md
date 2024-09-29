@@ -1,3 +1,9 @@
  - [x] Volume up/down ✅ 2024-09-16
- - [ ] Screen brightness up/down
+ - [ ] Screen brightness
+	 - [x] Windows ✅ 2024-09-26
+	 - [ ] Mac
  - [ ] Youtube application execution
+ - [ ] Volume
+	 - [ ] Windows
+	 - [x] Mac ✅ 2024-09-26
+ - [ ] Applications

@@ -2,6 +2,7 @@ import tkinter as tk
 import subprocess
 from tkinter import messagebox
 
+# Internal modules
 import brightness
 import volume
 import deck
