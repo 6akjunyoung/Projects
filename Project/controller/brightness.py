@@ -15,6 +15,9 @@ class Brightness:
         return "밝기: %s%%" % str(self.getLevel())
 
     def setLevel(self, level):
+        level = max(level, self.__minLevel)
+        level = min(level, self.__maxLevel)
+        
         with self.__monitor:
             self.__monitor.set_luminance(level)
 
