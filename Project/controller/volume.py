@@ -1,6 +1,9 @@
 import platform
 import subprocess
 from tkinter import messagebox
+from pycaw.pycaw import AudioUtilities, IAudioEndpointVolume
+from ctypes import cast, POINTER
+from comtypes import CLSCTX_ALL
 
 class Volume:
     def __init__(self):
@@ -13,16 +16,29 @@ class Volume:
 
     def getLevel(self):
         if ('Windows'==platform.system()):
-            return 0
+            return self.__getLevelWindows()
         else:
             return self.__get_volume_mac()
+
+    def __getLevelWindows(self):
+        devices = AudioUtilities.GetSpeakers()
+        interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+        volume = cast(interface, POINTER(IAudioEndpointVolume))
+        current_volume = volume.GetMasterVolumeLevelScalar() * 100
+        return int(current_volume)
+
+    def __setLevelWindows(self, value):
+        devices = AudioUtilities.GetSpeakers()
+        interface = devices.Activate(IAudioEndpointVolume._iid_, CLSCTX_ALL, None)
+        volume = cast(interface, POINTER(IAudioEndpointVolume))
+        volume.SetMasterVolumeLevelScalar(value / 100, None)
 
     def setLevel(self, level):
         level = max(level, self.__minLevel)
         level = min(level, self.__maxLevel)
 
         if ('Windows'==platform.system()):
-            return
+            self.__setLevelWindows(level)
         else:
             self.__set_volume_mac(level)
 
