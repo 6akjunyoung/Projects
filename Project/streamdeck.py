@@ -8,7 +8,11 @@ from controller import volume
 import deck
 import icon
 
-brightnessController = brightness.Brightness()
+brightnessController = []
+monitors = brightness.Brightness.getMonitors()
+for index, monitor in enumerate(monitors):
+    brightnessController.append(brightness.Brightness(index))
+    
 volumeController = volume.Volume()
 
 def launch_app(app_name):
@@ -32,18 +36,15 @@ volumeSection = icon.Icon(root)\
     .addButton("+ 볼륨 올리기", volumeController.increaseLevel)\
     .addSlider(lambda val: volumeController.setLevel(int(val)), volumeController.getLevel)
 
-brightnessSection = icon.Icon(root)\
-    .addSection(brightnessController.getTitle())\
-    .addButton("- 밝기 낮추기", brightnessController.decreaseLevel)\
-    .addLabel(brightnessController.getLabel)\
-    .addButton("+ 밝기 올리기", brightnessController.increaseLevel)\
-    .addSlider(lambda val: brightnessController.setLevel(int(val)), brightnessController.getLevel)
-
-def update_labels():
-    volumeSection.updateLabel()
-    volumeSection.updateSlider()
-    brightnessSection.updateLabel()
-    brightnessSection.updateSlider()
+brightnessSections = []
+for controller in brightnessController:
+    brightnessSection = icon.Icon(root)\
+        .addSection(controller.getTitle())\
+        .addButton("- 밝기 낮추기", controller.decreaseLevel)\
+        .addLabel(controller.getLabel)\
+        .addButton("+ 밝기 올리기", controller.increaseLevel)\
+        .addSlider(lambda val: controller.setLevel(int(val)), controller.getLevel)
+    brightnessSections.append(brightnessSection)
 
 statusSection = icon.Icon(root)\
     .addSection()\
@@ -51,17 +52,19 @@ statusSection = icon.Icon(root)\
 
 streamdeck.appendSection(applicationSection)
 streamdeck.appendSection(volumeSection)
-streamdeck.appendSection(brightnessSection)
+for brightnessSection in brightnessSections:
+    streamdeck.appendSection(brightnessSection)
 streamdeck.appendSection(statusSection)
 
 streamdeck.appendUpdater(volumeSection.updateLabel)
 streamdeck.appendUpdater(volumeSection.updateSlider)
-streamdeck.appendUpdater(brightnessSection.updateLabel)
-streamdeck.appendUpdater(brightnessSection.updateSlider)
+for brightnessSection in brightnessSections:
+    streamdeck.appendUpdater(brightnessSection.updateLabel)
+    streamdeck.appendUpdater(brightnessSection.updateSlider)
 
 def periodic_update():
     streamdeck.update()
-    root.after(500, periodic_update)
+    root.after(1000, periodic_update)
 
 periodic_update()
 
