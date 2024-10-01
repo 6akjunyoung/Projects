@@ -2,7 +2,7 @@ import screen_brightness_control as sbc
 
 class Brightness:
     def __init__(self, index):
-        self.__title = "Monitor"
+        self.__title = "Monitor " + str(index)
         self.__maxLevel = 100
         self.__minLevel = 0
         self.__index = index
@@ -32,4 +32,4 @@ class Brightness:
         self.setLevel(currentLevel - 10)
 
     def getTitle(self):
-        return self.__title + " " + str(self.__index)
+        return self.__title

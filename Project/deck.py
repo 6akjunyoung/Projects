@@ -8,6 +8,8 @@ class Deck:
         self.__height = height
         self.__sections = []
         self.__updaters = []
+        self.__controllers = { }
+        self.__activeControllerName = ""
         self.__initGUI()
 
     def __initGUI(self):
@@ -27,3 +29,17 @@ class Deck:
 
     def appendUpdater(self, updater):
         self.__updaters.append(updater)
+
+    def appendController(self, name, funcSetter, funcGetter):
+        self.__controllers[name] = funcSetter, funcGetter
+
+    def activateController(self, name):
+        self.__activeControllerName = name
+
+    def setControllerLevel(self, val):
+        funcSetter, _ = self.__controllers[self.__activeControllerName]
+        funcSetter(int(val))
+
+    def getControllerLevel(self):
+        _, funcGetter = self.__controllers[self.__activeControllerName]
+        return funcGetter()

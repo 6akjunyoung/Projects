@@ -33,7 +33,7 @@ class Icon:
     def addSlider(self, func, funcGetValue):
         self.__slider = tk.Scale(self.__section, from_=0, to=100, orient="horizontal", command=func)
         self.__slider.set(funcGetValue())
-        self.__slider.pack(side="left", padx=10)
+        self.__slider.pack()
         self.__sliderUpdater = funcGetValue
         return self
 
