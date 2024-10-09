@@ -19,6 +19,7 @@ def merge_gitignore_files(root_dir='.'):
 
             # 경로 추가해서 규칙 통합
             relative_path = os.path.relpath(dirpath, root_dir)
+            relative_path = relative_path.replace('\\', '/')  # 경로 구분자를 '/'로 변경
             merged_rules.append(f"# Rules from {relative_path}/.gitignore\n")
             for rule in rules:
                 rule = rule.strip()
